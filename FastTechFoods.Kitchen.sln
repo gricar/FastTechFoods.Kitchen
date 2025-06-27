@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen.Infrastructure", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen.Application", "src\Kitchen.Application\Kitchen.Application.csproj", "{70110723-ABC7-4F59-AE18-E68728D08330}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen.Domain", "src\Kitchen.Domain\Kitchen.Domain.csproj", "{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{70110723-ABC7-4F59-AE18-E68728D08330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70110723-ABC7-4F59-AE18-E68728D08330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70110723-ABC7-4F59-AE18-E68728D08330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{CEB0504A-7F7B-4B12-BD6E-BCEBBD6EE7DF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2B1E5EA7-BD80-4FF9-B592-FDD761510D26} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{70110723-ABC7-4F59-AE18-E68728D08330} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84C23743-21A4-40B0-B3B3-7B6D143201DD}

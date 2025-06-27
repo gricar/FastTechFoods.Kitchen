@@ -31,8 +31,6 @@ public static class DependencyInjection
 
         app.MapControllers();
 
-        app.UseHttpsRedirection();
-
         return app;
     }
 }

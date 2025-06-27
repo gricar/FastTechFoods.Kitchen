@@ -1,4 +1,6 @@
-﻿using Kitchen.Application.Infrastructure.Services;
+﻿using Kitchen.Application.Common.Messaging.Events;
+using Kitchen.Application.Infrastructure.Services;
+using Kitchen.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,22 +13,28 @@ public sealed record AcceptOrderCommandHandler(
 {
     public async Task<AcceptOrderResponse> Handle(AcceptOrderCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Kitchen.API handling {command} for OrderId: {OrderId}", nameof(AcceptOrderCommand), command.OrderId);
+        logger.LogInformation("Kitchen.API handling {command} for OrderId: {OrderId}", nameof(AcceptOrderCommand), command.order.OrderId);
 
-        var eventMsg = new OrderAcceptedEvent(command.OrderId, "Accepted", DateTime.Now);
+        var orderItems = command.order.OrderItems
+            .Select(item => new OrderItem(command.order.OrderId, item.ProductId, item.Quantity, item.Price))
+            .ToList();
+
+        var order = new Order(command.order.OrderId, command.order.CustomerId, orderItems, command.order.TotalPrice);
+
+        order.Accept();
+
+        var eventMsg = new OrderAcceptedEvent(new OrderDto(order.Id, order.CustomerId, command.order.OrderItems, order.TotalPrice, order.Status));
 
         await eventBus.PublishAsync(eventMsg, "order-accepted");
 
-        logger.LogInformation("OrderAcceptedEvent published for OrderId: {OrderId}", command.OrderId);
+        logger.LogInformation("OrderAcceptedEvent published for Order: {Order}", order);
 
         return new AcceptOrderResponse
         {
             Message = "Order accepted successfully.",
-            OrderId = command.OrderId,
-            AcceptedAt = DateTime.Now,
+            OrderId = order.Id,
+            AcceptedAt = order.LastModified.ToLocalTime(),
             Success = true
         };
     }
 }
-
-public sealed record OrderAcceptedEvent(Guid OrderId, string Status, DateTime AcceptedAt);
