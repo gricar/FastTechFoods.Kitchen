@@ -22,7 +22,7 @@ public static class DependencyInjection
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Kitchen API");
                 c.RoutePrefix = string.Empty; // Redireciona a url / para o Swagger
             });
         }

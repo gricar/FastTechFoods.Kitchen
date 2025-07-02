@@ -1,8 +1,10 @@
 ﻿using Kitchen.Application.Common.Messaging.Events;
 using Kitchen.Application.Infrastructure.Services;
 using Kitchen.Domain.Entities;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Kitchen.Application.Orders.AcceptOrder;
 
@@ -13,21 +15,19 @@ public sealed record AcceptOrderCommandHandler(
 {
     public async Task<AcceptOrderResponse> Handle(AcceptOrderCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Kitchen.API handling {command} for OrderId: {OrderId}", nameof(AcceptOrderCommand), command.order.OrderId);
+        logger.LogInformation("Kitchen.API handling {command} for OrderId: {OrderId}", nameof(AcceptOrderCommand), command.Order.OrderId);
 
-        var orderItems = command.order.OrderItems
-            .Select(item => new OrderItem(command.order.OrderId, item.ProductId, item.Quantity, item.Price))
-            .ToList();
+        var orderItems = command.Order.OrderItems.Adapt<List<OrderItem>>();
 
-        var order = new Order(command.order.OrderId, command.order.CustomerId, orderItems, command.order.TotalPrice);
+        var order = new Order(command.Order.OrderId, command.Order.CustomerId, orderItems, command.Order.TotalPrice);
 
         order.Accept();
 
-        var eventMsg = new OrderAcceptedEvent(new OrderDto(order.Id, order.CustomerId, command.order.OrderItems, order.TotalPrice, order.Status));
+        logger.LogInformation("Order accepted - Order: {Order}", JsonSerializer.Serialize<Order>(order));
+
+        var eventMsg = new OrderAcceptedEvent(new OrderDto(order.Id, order.CustomerId, command.Order.OrderItems, order.TotalPrice, order.Status));
 
         await eventBus.PublishAsync(eventMsg, "order-accepted");
-
-        logger.LogInformation("OrderAcceptedEvent published for Order: {Order}", order);
 
         return new AcceptOrderResponse
         {

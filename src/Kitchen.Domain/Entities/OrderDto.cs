@@ -11,6 +11,7 @@ public sealed record OrderDto(
 
 
 public sealed record OrderItemDto(
+    Guid OrderId,
     Guid ProductId,
     int Quantity,
     decimal Price);
