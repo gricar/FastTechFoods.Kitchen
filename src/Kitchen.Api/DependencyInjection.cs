@@ -1,4 +1,7 @@
 ﻿using Kitchen.Api.Exceptions;
+using Kitchen.Application.Common.Messaging.Events;
+using Kitchen.Application.Infrastructure.Services;
+using Kitchen.Application.Orders.EventHandlers.Integration;
 
 namespace Kitchen.Api;
 
@@ -17,6 +20,10 @@ public static class DependencyInjection
 
     public static WebApplication UseApiServices(this WebApplication app)
     {
+        var eventBus = app.Services.GetRequiredService<IEventBus>();
+
+        eventBus.SubscribeAsync<OrderCreatedEvent, OrderCreatedEventHandler>("order-created");
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

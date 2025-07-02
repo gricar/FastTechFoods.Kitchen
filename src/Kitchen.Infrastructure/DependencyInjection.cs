@@ -14,9 +14,9 @@ public static class DependencyInjection
         services.AddSingleton<IEventBus>(sp =>
         {
             var logger = sp.GetRequiredService<ILogger<RabbitMQEventBus>>();
-            var uri = configuration.GetConnectionString("RabbitMq") ?? "amqp://messagebroker:5672";
-            var connectionName = configuration["MessageBroker:ConnectionName"] ?? "Kitchen.API";
-            return new RabbitMQEventBus(uri, connectionName, logger);
+            var uri = configuration.GetConnectionString("RabbitMq");
+            var connectionName = configuration["MessageBroker:ConnectionName"];
+            return new RabbitMQEventBus(uri, connectionName, logger, sp);
         });
 
         return services;

@@ -3,7 +3,7 @@
 namespace Kitchen.Domain.Entities;
 
 public sealed record OrderDto(
-    Guid OrderId,
+    Guid Id,
     Guid CustomerId,
     List<OrderItemDto> OrderItems,
     decimal TotalPrice,

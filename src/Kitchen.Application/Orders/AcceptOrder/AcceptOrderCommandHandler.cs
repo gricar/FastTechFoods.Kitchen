@@ -15,11 +15,9 @@ public sealed record AcceptOrderCommandHandler(
 {
     public async Task<AcceptOrderResponse> Handle(AcceptOrderCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Kitchen.API handling {command} for OrderId: {OrderId}", nameof(AcceptOrderCommand), command.Order.OrderId);
-
         var orderItems = command.Order.OrderItems.Adapt<List<OrderItem>>();
 
-        var order = new Order(command.Order.OrderId, command.Order.CustomerId, orderItems, command.Order.TotalPrice);
+        var order = new Order(command.Order.Id, command.Order.CustomerId, orderItems, command.Order.TotalPrice);
 
         order.Accept();
 

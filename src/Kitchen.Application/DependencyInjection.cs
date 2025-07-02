@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Kitchen.Application.Common.Behaviors;
+using Kitchen.Application.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -13,8 +15,10 @@ public static class DependencyInjection
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             //config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            //config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
+
+        services.AddIntegrationEventHandlers(Assembly.GetExecutingAssembly());
 
         return services;
     }
