@@ -13,7 +13,7 @@ public sealed class OrderCreatedEventHandler(
     public async Task Handle(OrderCreatedEvent @event)
     {
         logger.LogInformation("Integration Event handled: {IntegrationEvent}", @event.EventType);
-        logger.LogInformation("Order {OrderId} was created by Order MS.", @event.Order.Id);
+        logger.LogInformation("Order {OrderId} was created by Ordering MS.", @event.Order.Id);
 
         await sender.Send(new CreateOrderCommand(@event.Order));
 
