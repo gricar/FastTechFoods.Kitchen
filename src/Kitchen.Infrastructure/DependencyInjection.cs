@@ -68,12 +68,12 @@ public static class DependencyInjection
                 cm.SetIgnoreExtraElements(true); // Ignore any fields in DB not present in the model
                 cm.MapIdProperty(o => o.Id).SetSerializer(new GuidSerializer(GuidRepresentation.Standard));  // Map the Id property as the BSON _id
                 cm.MapProperty(o => o.CustomerId).SetSerializer(new GuidSerializer(GuidRepresentation.Standard)).SetElementName("CustomerId");
-                cm.MapProperty(o => o.OrderItems).SetElementName("OrderItems");
-                cm.MapProperty(o => o.TotalPrice).SetElementName("TotalPrice");
+                //cm.MapProperty(o => o.OrderItems).SetElementName("OrderItems");
+                //cm.MapProperty(o => o.TotalPrice).SetElementName("TotalPrice");
                 cm.MapProperty(o => o.Status).SetElementName("Status")
                     .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<OrderStatus>(MongoDB.Bson.BsonType.String)); // Store enum as string
-                cm.MapProperty(o => o.LastModified).SetElementName("LastModified");
-                cm.MapProperty(o => o.LastModifiedBy).SetElementName("LastModifiedBy");
+                //cm.MapProperty(o => o.LastModified).SetElementName("LastModified");
+                //cm.MapProperty(o => o.LastModifiedBy).SetElementName("LastModifiedBy");
             });
         }
 
@@ -86,8 +86,8 @@ public static class DependencyInjection
                 cm.SetIgnoreExtraElements(true);
                 cm.MapProperty(oi => oi.OrderId).SetSerializer(new GuidSerializer(GuidRepresentation.Standard)).SetElementName("OrderId");
                 cm.MapProperty(oi => oi.ProductId).SetSerializer(new GuidSerializer(GuidRepresentation.Standard)).SetElementName("ProductId");
-                cm.MapProperty(oi => oi.Quantity).SetElementName("Quantity");
-                cm.MapProperty(oi => oi.Price).SetElementName("Price");
+                //cm.MapProperty(oi => oi.Quantity).SetElementName("Quantity");
+                //cm.MapProperty(oi => oi.Price).SetElementName("Price");
             });
         }
     }
