@@ -1,6 +1,6 @@
 ﻿using Kitchen.Domain.Enums;
 
-namespace Kitchen.Domain.Entities;
+namespace Kitchen.Application.Orders.DTOs;
 
 public sealed record OrderDto(
     Guid Id,
@@ -8,7 +8,6 @@ public sealed record OrderDto(
     List<OrderItemDto> OrderItems,
     decimal TotalPrice,
     OrderStatus Status);
-
 
 public sealed record OrderItemDto(
     Guid OrderId,

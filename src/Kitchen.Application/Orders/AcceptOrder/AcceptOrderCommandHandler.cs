@@ -1,7 +1,9 @@
 ﻿using Kitchen.Application.Common.Messaging.Events;
 using Kitchen.Application.Infrastructure.Data;
 using Kitchen.Application.Infrastructure.Services;
+using Kitchen.Application.Orders.DTOs;
 using Kitchen.Domain.Entities;
+using Mapster;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -17,16 +19,18 @@ public sealed record AcceptOrderCommandHandler(
 {
     public async Task<AcceptOrderResponse> Handle(AcceptOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = await dbContext.Orders.Find(x => x.Id == command.Order.Id).FirstOrDefaultAsync(cancellationToken);
+        var order = await dbContext.Orders
+            .Find(x => x.Id == command.OrderId)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (order is null)
         {
-            logger.LogWarning("Order with ID: {OrderId} not found.", command.Order.Id);
+            logger.LogWarning("Order with ID: {OrderId} not found.", command.OrderId);
             return new AcceptOrderResponse
             {
-                OrderId = command.Order.Id,
-                Success = false,
-                Message = $"Order with ID {command.Order.Id} not found."
+                OrderId = command.OrderId,
+                IsSuccess = false,
+                Message = $"Order with ID {command.OrderId} not found."
             };
         }
 
@@ -39,16 +43,16 @@ public sealed record AcceptOrderCommandHandler(
 
         logger.LogInformation("Order successfully accepted - Order: {Order}", JsonSerializer.Serialize<Order>(order));
 
-        var eventMsg = new OrderAcceptedEvent(new OrderDto(order.Id, order.CustomerId, command.Order.OrderItems, order.TotalPrice, order.Status));
+        var eventMsg = new OrderAcceptedEvent(order.Adapt<OrderDto>());
 
         await eventBus.PublishAsync(eventMsg, "order-accepted");
 
         return new AcceptOrderResponse
         {
-            Message = "Order accepted successfully.",
+            Message = "Order successfully accepted.",
             OrderId = order.Id,
             AcceptedAt = order.LastModified.ToLocalTime(),
-            Success = true
+            IsSuccess = true
         };
     }
 }

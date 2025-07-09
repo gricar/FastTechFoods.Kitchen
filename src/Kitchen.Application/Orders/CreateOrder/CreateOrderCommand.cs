@@ -1,4 +1,4 @@
-﻿using Kitchen.Domain.Entities;
+﻿using Kitchen.Application.Orders.DTOs;
 using MediatR;
 
 namespace Kitchen.Application.Orders.CreateOrder

@@ -16,13 +16,13 @@ namespace Kitchen.Api.Controllers
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        [HttpPut("{orderId}/accept")]
-        [ProducesResponseType(typeof(Guid), Status201Created)]
+        [HttpPut("{orderId:guid}/accept")]
+        [ProducesResponseType(typeof(AcceptOrderResponse), Status200OK)]
         [ProducesResponseType(Status400BadRequest)]
-        public async Task<ActionResult<Guid>> AcceptOrder([FromBody] AcceptOrderCommand command)
+        public async Task<ActionResult<AcceptOrderResponse>> AcceptOrder([FromRoute] Guid orderId, CancellationToken cancellationToken)
         {
-            var response = await _dispatcher.Send(command);
-            return CreatedAtAction(nameof(AcceptOrder), response);
+            var response = await _dispatcher.Send(new AcceptOrderCommand(orderId), cancellationToken);
+            return Ok(response);
         }
     }
 }

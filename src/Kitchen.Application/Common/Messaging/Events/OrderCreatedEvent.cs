@@ -1,4 +1,4 @@
-﻿using Kitchen.Domain.Entities;
+﻿using Kitchen.Application.Orders.DTOs;
 
 namespace Kitchen.Application.Common.Messaging.Events;
 
