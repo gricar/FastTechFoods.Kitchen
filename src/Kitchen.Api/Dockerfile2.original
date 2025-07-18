@@ -14,7 +14,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Kitchen.Api/Kitchen.Api.csproj", "src/Kitchen.Api/"]
 COPY ["src/Kitchen.Application/Kitchen.Application.csproj", "src/Kitchen.Application/"]
-COPY ["src/Kitchen.Domain/Kitchen.Domain.csproj", "src/Kitchen.Domain/"]
 COPY ["src/Kitchen.Infrastructure/Kitchen.Infrastructure.csproj", "src/Kitchen.Infrastructure/"]
 RUN dotnet restore "./src/Kitchen.Api/Kitchen.Api.csproj"
 COPY . .

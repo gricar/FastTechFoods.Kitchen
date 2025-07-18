@@ -1,7 +1,10 @@
-﻿using Kitchen.Api.Exceptions;
+﻿using HealthChecks.UI.Client;
+using Kitchen.Api.Exceptions;
 using Kitchen.Application.Common.Messaging.Events;
 using Kitchen.Application.Infrastructure.Services;
 using Kitchen.Application.Orders.EventHandlers.Integration;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Prometheus;
 
 namespace Kitchen.Api;
 
@@ -36,7 +39,16 @@ public static class DependencyInjection
 
         app.UseExceptionHandler(options => { });
 
+        app.UseMetricServer();
+
+        app.UseHttpMetrics();
+
         app.MapControllers();
+
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
         return app;
     }

@@ -20,6 +20,10 @@ public static class DependencyInjection
 
         services.AddIntegrationEventHandlers(Assembly.GetExecutingAssembly());
 
+        services.AddHealthChecks()
+            //.AddMongoDb(configuration.GetConnectionString("MongoDb")!, name: "MongoDB Health Check")
+            .AddRabbitMQ(configuration.GetConnectionString("RabbitMQ")!, name: "RabbitMQ Health Check");
+
         return services;
     }
 }
