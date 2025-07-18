@@ -13,6 +13,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen.Application", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen.Domain", "src\Kitchen.Domain\Kitchen.Domain.csproj", "{0BA01849-2EB4-4693-9DF0-5EDE3C8B8B13}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{451B953D-B92E-4FDC-84AC-382AE04B43DC}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\configmap.yaml = k8s\configmap.yaml
+		k8s\deployment.yaml = k8s\deployment.yaml
+		k8s\service.yaml = k8s\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{A159CCE9-A306-4F6A-8110-78258ABCEE45}"
+	ProjectSection(SolutionItems) = preProject
+		requests\http-client.env.json = requests\http-client.env.json
+		kitchen.http = kitchen.http
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

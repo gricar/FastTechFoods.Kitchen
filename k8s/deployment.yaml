@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchen-api
+  labels:
+    app: fastTechFoods
+    service: kitchen-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastTechFoods
+      service: kitchen-api
+  template:
+    metadata:
+      labels:
+        app: fastTechFoods
+        service: kitchen-api
+    spec:
+      containers:
+        - name: fasttechfoods-kitchen-api
+          image: gricardo10/fasttechfoods-kitchen-api
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: kitchen-config
+                  key: AppEnv
+            - name: ConnectionStrings__MongoDb
+              valueFrom:
+                configMapKeyRef:
+                  name: kitchen-config
+                  key: dbConnString
+            - name: ConnectionStrings__RabbitMq
+              valueFrom:
+                configMapKeyRef:
+                  name: kitchen-config
+                  key: rabbitConnString
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
