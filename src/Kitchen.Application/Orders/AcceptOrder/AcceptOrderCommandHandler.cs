@@ -1,4 +1,5 @@
 ﻿using Kitchen.Application.Common.Messaging.Events;
+using Kitchen.Application.Exceptions;
 using Kitchen.Application.Infrastructure.Data;
 using Kitchen.Application.Infrastructure.Services;
 using Kitchen.Application.Orders.DTOs;
@@ -26,12 +27,7 @@ public sealed record AcceptOrderCommandHandler(
         if (order is null)
         {
             logger.LogWarning("Order with ID: {OrderId} not found.", command.OrderId);
-            return new AcceptOrderResponse
-            {
-                OrderId = command.OrderId,
-                IsSuccess = false,
-                Message = $"Order with ID {command.OrderId} not found."
-            };
+            throw new OrderNotFoundException(command.OrderId);
         }
 
         order.Accept();

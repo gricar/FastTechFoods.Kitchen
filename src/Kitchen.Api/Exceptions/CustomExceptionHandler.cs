@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Kitchen.Application.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,12 +35,12 @@ public class CustomExceptionHandler
                 exception.GetType().Name,
                 context.Response.StatusCode = StatusCodes.Status400BadRequest
             ),
-            //NotFoundException =>
-            //(
-            //    exception.Message,
-            //    exception.GetType().Name,
-            //    context.Response.StatusCode = StatusCodes.Status404NotFound
-            //),
+            NotFoundException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                context.Response.StatusCode = StatusCodes.Status404NotFound
+            ),
             _ =>
             (
                 exception.Message,
