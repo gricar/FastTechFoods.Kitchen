@@ -34,4 +34,15 @@ public class Order
         LastModified = DateTime.UtcNow;
         LastModifiedBy = "KitchenService";
     }
+
+    public void Reject()
+    {
+        if (Status != OrderStatus.Pending)
+        {
+            throw new InvalidOperationException("Only pending orders can be rejected.");
+        }
+        Status = OrderStatus.Rejected;
+        LastModified = DateTime.UtcNow;
+        LastModifiedBy = "KitchenService";
+    }
 }

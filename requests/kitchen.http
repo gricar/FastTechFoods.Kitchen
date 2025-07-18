@@ -13,3 +13,9 @@ GET {{HostAddress}}/health
 PUT {{HostAddress}}/api/orders/{{OrderId}}/accept
 
 ###
+
+# Accept the new order
+@OrderId=4568968c-dfe6-4221-a14b-74205e5f4ddb
+PUT {{HostAddress}}/api/orders/{{OrderId}}/reject
+
+###
